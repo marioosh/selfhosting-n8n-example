@@ -83,16 +83,19 @@ Next install Docker following the instructions from the [official Docker documen
 After Docker is installed, you can clone the contents of this repository, by running
 
 ```bash
-git clone https://github.com/sliplane-support/selfhosting-n8n-example.git
+git clone https://github.com/marioosh/selfhosting-n8n-example.git
 ```
 
 A new folder will be created on your VPS named `selfhosting-n8n-example`. Navigate inside the directory with 
+On your VPS you can rename the folder to whatever you want, for example: `n8n_server`
 
 ```bash
-cd selfhosting-n8n-example
+cd n8n_server # or selfhosting-n8n-example if you didn't rename the folder
 ```
 
-Once inside the directory, update the content of the `Caddyfile` which is located in the `conf` directory. You can open the file using
+Once inside the directory:
+- copy `Caddyfile.example` to `Caddyfile`
+- update the content of the `Caddyfile` with your domain name. You can open the file using
 
 ```bash
 nano conf/Caddyfile
@@ -100,10 +103,10 @@ nano conf/Caddyfile
 
 Replace the example domain with your actual domain, that you are going to use, save the changes and exit the file editor.
 
-Next, rename the `.env.example` file to `.env` by running
+Next, copy the `.env.example` file to `.env` by running
 
 ```bash
-mv .env.example .env
+cp .env.example .env
 ```
 
 You can open the `.env` file with `nano` as well, in order to overwrite the default password.
@@ -118,9 +121,21 @@ This will download and run the services defined in the docker-compose.yml file.
 
 Once the services are up and running, you can access n8n in a browser using your custom domain.
 
+### Scripts
+reposirotry contains a few scripts to help you manage the services:
+- `n8n_start.sh` - starts the services
+- `n8n_update.sh` - updates the services
 
-## How to move on from here?
+```bash
+# Make the scripts executable
+chmod +x n8n_start.sh
+chmod +x n8n_update.sh
 
-We already have setup some basic security measures like using SSH keys instead of passwords, enabling backups and using the Hetzner firewall. In a production setting, you probably want to dig a little deeper into the topic of VPS hardening. You can also further improve the setup by adding logging and monitoring and automatic deploys from GitHub. If you want all of that out of the box, check out [Sliplane](https://sliplane.io/n8n-hosting?utm_source=gh-selfhosting-n8n).
+# Start the services
+./n8n_start.sh
+
+# Update the services
+./n8n_update.sh
+```
 
 
