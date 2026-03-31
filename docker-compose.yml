@@ -8,12 +8,12 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB}
     volumes:
-      - n8n_postgres_data:/var/lib/postgresql/data
+      - ./data/postgres:/var/lib/postgresql/data
     networks:
       - n8n_network
 
   n8n:
-    image: n8nio/n8n:2.4.4
+    image: n8nio/n8n:latest
     container_name: n8n
     restart: unless-stopped
     environment:
@@ -27,6 +27,8 @@ services:
       - n8n_network
     depends_on:
       - postgres
+    volumes:
+      - ./data/n8n:/home/node/.n8n
 
   caddy:
     image: caddy:2
@@ -37,16 +39,10 @@ services:
       - "443:443"
     volumes:
       - ./conf:/etc/caddy
-      - caddy_data:/data
-      - caddy_config:/config
+      - ./data/caddy_data:/data
+      - ./data/caddy_config:/config
     networks:
       - n8n_network
 
 networks:
   n8n_network:
-
-volumes:
-  caddy_data:
-  caddy_config:
-  n8n_postgres_data:
-
