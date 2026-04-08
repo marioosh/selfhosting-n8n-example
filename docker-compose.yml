@@ -23,12 +23,16 @@ services:
       DB_POSTGRESDB_DATABASE: ${POSTGRES_DB}
       DB_POSTGRESDB_USER: ${POSTGRES_USER}
       DB_POSTGRESDB_PASSWORD: ${POSTGRES_PASSWORD}
+      N8N_HOST: ${N8N_HOST}
+      N8N_PORT: ${N8N_PORT}
+      N8N_PROTOCOL: ${N8N_PROTOCOL}
+      WEBHOOK_URL: ${WEBHOOK_URL}
     networks:
       - n8n_network
     depends_on:
       - postgres
     volumes:
-      - ./data/n8n:/home/node/.n8n
+      - n8n_data:/home/node/.n8n
 
   caddy:
     image: caddy:2
@@ -46,3 +50,6 @@ services:
 
 networks:
   n8n_network:
+
+volumes:
+  n8n_data:
